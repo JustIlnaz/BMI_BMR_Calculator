@@ -5,42 +5,60 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BMI_BMR_Calculator"
         mc:Ignorable="d"
-        Title="BMI_BMR_Calculator" Height="450" Width="800">
+        Title="BMI и BMR Калькулятор" Height="450" Width="800"
+        WindowStartupLocation="CenterScreen">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#FF6B73FF" Offset="0"/>
+                <GradientStop Color="#FF9DD5FF" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
 
-        <!-- Заголовок приложения -->
-        <TextBlock Grid.Row="0" Text="Калькулятор BMI и BMR" 
-                   FontSize="28" FontWeight="Bold" 
-                   HorizontalAlignment="Center" 
-                   Margin="20"/>
+        <!-- Frame для навигации к BMI -->
+        <Frame x:Name="mainFrame" NavigationUIVisibility="Hidden" Visibility="Collapsed"/>
 
-        <!-- Выбор калькуляторов -->
-        <StackPanel Grid.Row="1" Orientation="Horizontal" 
-                    VerticalAlignment="Center" 
-                    HorizontalAlignment="Center">
-            <Button Name="BmrButton" Content="BMR Калькулятор" 
-                    Margin="20" FontSize="20" 
-                    Width="200" Height="60"
-                    Click="BmrButton_Click"/>
-            <Button Name="BmiButton" Content="BMI Калькулятор" 
-                    Margin="20" FontSize="20" 
-                    Width="200" Height="60"
-                    Click="BmiButton_Click"/>
-        </StackPanel>
+        <!-- Главное меню -->
+        <StackPanel x:Name="mainMenu" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <TextBlock Text="Калькуляторы здоровья" 
+                      FontSize="32" FontWeight="Bold" 
+                      HorizontalAlignment="Center" 
+                      Margin="0,0,0,20" 
+                      Foreground="White" 
+                />
+            <TextBlock Text="Выберите калькулятор для расчета показателей вашего здоровья" 
+                      FontSize="16" 
+                      HorizontalAlignment="Center" 
+                      Margin="0,0,0,40" 
+                      Foreground="White" 
+                      TextWrapping="Wrap" 
+                      TextAlignment="Center"/>
 
-        <!-- Информация о калькуляторах -->
-        <StackPanel Grid.Row="2" Margin="20">
-            <TextBlock Text="BMI - Индекс массы тела" 
-                       FontSize="14" HorizontalAlignment="Center" 
-                       Margin="5"/>
-            <TextBlock Text="BMR - Базовый метаболизм" 
-                       FontSize="14" HorizontalAlignment="Center" 
-                       Margin="5"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button x:Name="bmrButton" Click="BMRButton_Click" 
+                       Width="200" Height="80" Margin="20" 
+                       FontSize="18" FontWeight="Bold"
+                       Background="White" Foreground="#FF6B73FF"
+                       BorderBrush="#FF6B73FF" BorderThickness="2"
+                       Style="{DynamicResource {x:Static ToolBar.ButtonStyleKey}}">
+                    <StackPanel>
+                        <TextBlock Text="🔥 BMR Калькулятор" HorizontalAlignment="Center"/>
+                        <TextBlock Text="Базовый метаболизм" FontSize="12" FontWeight="Normal" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+                <Button x:Name="bmiButton" Click="BMIButton_Click" 
+                       Width="200" Height="80" Margin="20" 
+                       FontSize="18" FontWeight="Bold"
+                       Background="White" Foreground="#FF6B73FF"
+                       BorderBrush="#FF6B73FF" BorderThickness="2"
+                       Style="{DynamicResource {x:Static ToolBar.ButtonStyleKey}}">
+                    <StackPanel>
+                        <TextBlock Text="📊 BMI Калькулятор" HorizontalAlignment="Center"/>
+                        <TextBlock Text="Индекс массы тела" FontSize="12" FontWeight="Normal" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
         </StackPanel>
     </Grid>
 </Window>

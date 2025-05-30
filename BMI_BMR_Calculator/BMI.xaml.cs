@@ -2,37 +2,38 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 
 namespace BMI_BMR_Calculator
 {
     public partial class BMI : Page
     {
         private string selectedGender = "";
+        private MainWindow parentWindow;
 
-        public BMI()
+        public BMI(MainWindow parent)
         {
             InitializeComponent();
+            parentWindow = parent;
         }
 
         private void MaleButton_Click(object sender, RoutedEventArgs e)
         {
             selectedGender = "male";
-            maleButton.Background = new SolidColorBrush(Colors.LightBlue);
-            femaleButton.Background = new SolidColorBrush(Colors.White);
-
-            // Обновляем изображение результата
-            resultImage.Source = new BitmapImage(new Uri("image/male-icon.png", UriKind.Relative));
+            // Визуальная обратная связь
+            maleButton.BorderBrush = new SolidColorBrush(Colors.Blue);
+            maleButton.BorderThickness = new Thickness(3);
+            femaleButton.BorderBrush = new SolidColorBrush(Color.FromRgb(25, 118, 210));
+            femaleButton.BorderThickness = new Thickness(2);
         }
 
         private void FemaleButton_Click(object sender, RoutedEventArgs e)
         {
             selectedGender = "female";
-            femaleButton.Background = new SolidColorBrush(Colors.LightPink);
-            maleButton.Background = new SolidColorBrush(Colors.White);
-
-            // Обновляем изображение результата
-            resultImage.Source = new BitmapImage(new Uri("image/female-icon.png", UriKind.Relative));
+            // Визуальная обратная связь
+            femaleButton.BorderBrush = new SolidColorBrush(Colors.Pink);
+            femaleButton.BorderThickness = new Thickness(3);
+            maleButton.BorderBrush = new SolidColorBrush(Color.FromRgb(25, 118, 210));
+            maleButton.BorderThickness = new Thickness(2);
         }
 
         private void CalculateBMI_Click(object sender, RoutedEventArgs e)
@@ -47,11 +48,11 @@ namespace BMI_BMR_Calculator
 
                 if (string.IsNullOrWhiteSpace(heightTextBox.Text) || string.IsNullOrWhiteSpace(weightTextBox.Text))
                 {
-                    MessageBox.Show("Пожалуйста, введите рост и вес.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("Пожалуйста, заполните все поля.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
 
-                double height = Convert.ToDouble(heightTextBox.Text) / 100; // конвертируем см в метры
+                double height = Convert.ToDouble(heightTextBox.Text);
                 double weight = Convert.ToDouble(weightTextBox.Text);
 
                 if (height <= 0 || weight <= 0)
@@ -60,36 +61,88 @@ namespace BMI_BMR_Calculator
                     return;
                 }
 
-                double bmi = weight / (height * height);
+                // Расчет BMI (рост в метрах)
+                double heightInMeters = height / 100;
+                double bmi = weight / (heightInMeters * heightInMeters);
+
+                // Отображение результата
                 bmiValueText.Text = bmi.ToString("F1");
 
-                // Определяем категорию и обновляем UI
+                // Определение категории и изменение изображения
                 string category;
+                string imagePath;
+                Color arrowColor;
                 double arrowPosition;
 
                 if (bmi < 18.5)
                 {
-                    category = "Недостаточный";
-                    arrowPosition = 75; // позиция для первого сегмента
+                    category = "Недостаточный вес";
+                    imagePath = "image/bmi-underweight-icon.png";
+                    arrowColor = Colors.LightBlue;
+                    arrowPosition = 50;
                 }
-                else if (bmi < 25)
+                else if (bmi >= 18.5 && bmi < 25)
                 {
-                    category = "Здоровый";
-                    arrowPosition = 150; // позиция для второго сегмента
+                    category = "Здоровый вес";
+                    imagePath = "image/bmi-healthy-icon.png";
+                    arrowColor = Colors.Green;
+                    arrowPosition = 130;
                 }
-                else if (bmi < 30)
+                else if (bmi >= 25 && bmi < 30)
                 {
-                    category = "Избыточный";
-                    arrowPosition = 225; // позиция для третьего сегмента
+                    category = "Избыточный вес";
+                    imagePath = "image/bmi-overweight-icon.png";
+                    arrowColor = Colors.Orange;
+                    arrowPosition = 210;
                 }
                 else
                 {
                     category = "Ожирение";
-                    arrowPosition = 300; // позиция для четвертого сегмента
+                    imagePath = "image/bmi-obese-icon.png";
+                    arrowColor = Colors.Red;
+                    arrowPosition = 290;
+                }
+
+                // Обновление изображения и текста
+                try
+                {
+                    resultImage.Source = new System.Windows.Media.Imaging.BitmapImage(new Uri(imagePath, UriKind.Relative));
+                }
+                catch
+                {
+                    // Если изображение не найдено, используем стандартное
+                    resultImage.Source = null;
                 }
 
                 categoryText.Text = category;
-                Canvas.SetLeft(bmiArrow, arrowPosition);
+
+                // Позиционирование стрелки на шкале
+                bmiArrow.Visibility = Visibility.Visible;
+                System.Windows.Controls.Canvas.SetLeft(bmiArrow, arrowPosition);
+                bmiArrow.Fill = new SolidColorBrush(arrowColor);
+
+                // Показать результат с дополнительной информацией
+                string message = $"Ваш BMI: {bmi:F1}\nКатегория: {category}\n\n";
+
+                if (bmi < 18.5)
+                {
+                    message += "Рекомендация: Обратитесь к врачу для составления плана набора веса.";
+                }
+                else if (bmi >= 18.5 && bmi < 25)
+                {
+                    message += "Поздравляем! У вас здоровый вес. Поддерживайте активный образ жизни.";
+                }
+                else if (bmi >= 25 && bmi < 30)
+                {
+                    message += "Рекомендация: Рассмотрите возможность снижения веса через диету и упражнения.";
+                }
+                else
+                {
+                    message += "Рекомендация: Обязательно обратитесь к врачу для составления плана снижения веса.";
+                }
+
+                MessageBox.Show(message, "Результат BMI", MessageBoxButton.OK, MessageBoxImage.Information);
+
             }
             catch (FormatException)
             {
@@ -103,28 +156,8 @@ namespace BMI_BMR_Calculator
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
-            // Возвращаемся к главному окну
-            Window parentWindow = Window.GetWindow(this);
-            if (parentWindow != null)
-            {
-                // Восстанавливаем главное окно
-                MainWindow mainWindow = new MainWindow();
-                mainWindow.Show();
-                parentWindow.Close();
-            }
-        }
-
-        // Дополнительный метод для очистки полей
-        private void ClearFields()
-        {
-            heightTextBox.Text = "";
-            weightTextBox.Text = "";
-            bmiValueText.Text = "0.0";
-            categoryText.Text = "Здоровый";
-            selectedGender = "";
-            maleButton.Background = new SolidColorBrush(Colors.White);
-            femaleButton.Background = new SolidColorBrush(Colors.White);
-            Canvas.SetLeft(bmiArrow, 150);
+            // Возврат к главному меню
+            parentWindow?.ReturnToMainMenu();
         }
     }
 }

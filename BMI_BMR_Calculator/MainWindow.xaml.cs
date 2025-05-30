@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace BMI_BMR_Calculator
@@ -10,35 +11,28 @@ namespace BMI_BMR_Calculator
             InitializeComponent();
         }
 
-        // Переход к BMR калькулятору (открытие нового окна)
-        private void BmrButton_Click(object sender, RoutedEventArgs e)
+        private void BMIButton_Click(object sender, RoutedEventArgs e)
         {
-            BMR bmrWindow = new BMR();
-            bmrWindow.Show();
-            // Если хотите закрыть главное окно при открытии BMR:
-            // this.Close();
+            // Переход к BMI калькулятору через Frame
+            mainMenu.Visibility = Visibility.Collapsed;
+            mainFrame.Visibility = Visibility.Visible;
+            mainFrame.Navigate(new BMI(this));
         }
 
-        // Переход к BMI калькулятору (навигация внутри текущего окна)
-        private void BmiButton_Click(object sender, RoutedEventArgs e)
+        private void BMRButton_Click(object sender, RoutedEventArgs e)
         {
-            // Вариант 1: Замена содержимого главного окна на BMI страницу
-            BMI bmiPage = new BMI();
+            // Переход к BMR калькулятору через Frame
+            mainMenu.Visibility = Visibility.Collapsed;
+            mainFrame.Visibility = Visibility.Visible;
+            mainFrame.Navigate(new BMR(this));
+        }
 
-            // Создаем Frame для навигации
-            Frame navigationFrame = new Frame();
-            navigationFrame.Navigate(bmiPage);
-
-            // Заменяем содержимое главного окна на Frame
-            this.Content = navigationFrame;
-
-            // Вариант 2 (альтернативный): Открыть BMI в новом окне
-            // Window bmiWindow = new Window();
-            // bmiWindow.Content = new BMI();
-            // bmiWindow.Title = "BMI Calculator";
-            // bmiWindow.Height = 450;
-            // bmiWindow.Width = 800;
-            // bmiWindow.Show();
+        // Метод для возврата к главному меню из BMI
+        public void ReturnToMainMenu()
+        {
+            mainFrame.Visibility = Visibility.Collapsed;
+            mainMenu.Visibility = Visibility.Visible;
+            mainFrame.Content = null;
         }
     }
 }
