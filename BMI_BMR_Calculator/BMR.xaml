@@ -1,0 +1,108 @@
+﻿<Page x:Class="BMI_BMR_Calculator.image.BMR"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:BMI_BMR_Calculator.image"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="BMR">
+    <Grid Background="White">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="BMR калькулятор" HorizontalAlignment="Center" FontSize="20" Grid.ColumnSpan="2"/>
+        <StackPanel Margin="10,10,10,10.5"   >
+            <TextBlock Text="" HorizontalAlignment="Center" FontSize="20"/>
+
+            <TextBlock Margin="10" Width="200" HorizontalAlignment="Left" ><Run Text="Информация о том что такое BMI и"/><LineBreak/><Run Text="как калькулятор работает"/></TextBlock>
+
+            <StackPanel Margin="10" Width="190" HorizontalAlignment="Left" Orientation="Horizontal">
+                <StackPanel Margin="10,10,-10,10" Width="90" HorizontalAlignment="Left">
+                    <Image  Margin="20,20,0,20" Source="male-icon.png" Height="50" Width="50" HorizontalAlignment="Left" MouseLeftButtonDown="Man"/>
+                    <Label Content="Мужской" Margin="10,10,0,10" Width="70" HorizontalAlignment="Left" MouseLeftButtonDown="Man"/>
+
+                </StackPanel>
+                <StackPanel Margin="10,10,-10,10" Width="90" HorizontalAlignment="Center">
+                    <Image  Margin="20" Source="male-icon.png" Height="50" Width="50" HorizontalAlignment="Left" MouseLeftButtonDown="Woman"/>
+                    <Label Content="Женский" Margin="10,10,0,10" Width="70" HorizontalAlignment="Left"/>
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="Рост:" Margin="50,5,5,5"/>
+                    <TextBlock Text="Вес:" Margin="50,5,5,5"/>
+                    <TextBlock Text="Возраст:" Margin="47,5,5,5"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Vertical">
+                    <TextBox  Width="50" Margin="0,5,5,5" Name="Rost"/>
+                    <TextBox Width="50" Margin="0,5,5,5" Name="Weight"/>
+                    <TextBox Width="50" Margin="0,5,5,5" Name="OLD"/>
+                </StackPanel>
+
+
+
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="см" Margin="0,5,5,5"/>
+                    <TextBlock Text="кг" Margin="0,7,5,5"/>
+                    <TextBlock Text="лет" Margin="0,10,5,5"/>
+                </StackPanel>
+
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <Button  Margin="10,5,5,5" Width="100" Height="22" Content="Рассчитать"/>
+                <Button  Margin="10,5,5,5" Width="100" Height="22" Content="Отмена"/>
+
+            </StackPanel>
+
+        </StackPanel>
+
+
+
+        <!-- 2pt -->
+
+
+
+        <StackPanel Margin="10,10,10,10.5" Grid.Column="1"  >
+            <TextBlock Text="" HorizontalAlignment="Center" FontSize="20"/>
+
+            <TextBlock Margin="10" Width="200" HorizontalAlignment="Left" ><Run Text="Информация о том что такое BMI и"/><LineBreak/><Run Text="как калькулятор работает"/></TextBlock>
+
+            <StackPanel Margin="10" Width="290" HorizontalAlignment="Center" Orientation="Vertical">
+                <TextBlock Text="Ваш BMR" HorizontalAlignment="Center" FontSize="14"/>
+                <TextBlock Name="YourBMR" Margin="0 20 0 20" FontSize="26" HorizontalAlignment="Center"></TextBlock>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Ежедневно тратится калорий" HorizontalAlignment="Center" FontSize="14"/>
+                    <Button Content=" ©" FontSize="14" Background="White" Margin="10 -2 0 0" BorderBrush="White" VerticalAlignment="Top" Click="Button_Click"></Button>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0 15 0 0">
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock HorizontalAlignment="Right" Foreground="Blue" Margin=" 0 0 0 10">Сидячий:</TextBlock>
+                        <TextBlock HorizontalAlignment="Right" Foreground="Green" Margin=" 0 0 0 10">Маленькая активность:</TextBlock>
+                        <TextBlock HorizontalAlignment="Right" Foreground="YellowGreen" Margin=" 0 0 0 10">Средняя активность:</TextBlock>
+                        <TextBlock HorizontalAlignment="Right" Foreground="Red" Margin=" 0 0 0 10">Сильная активность:</TextBlock>
+                        <TextBlock HorizontalAlignment="Right" Foreground="DarkRed">Максимальная активность:</TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical" Margin="20 0 0 0">
+                        <TextBlock HorizontalAlignment="Right" Foreground="Blue" Margin=" 0 0 0 10" Name="ManBm1"></TextBlock>
+                        <TextBlock HorizontalAlignment="Right" Foreground="Green" Margin=" 0 0 0 10" Name="ManBm2"></TextBlock>
+                        <TextBlock HorizontalAlignment="Right" Foreground="YellowGreen" Margin=" 0 0 0 10" Name="ManBm3"></TextBlock>
+                        <TextBlock HorizontalAlignment="Right" Foreground="Red" Margin=" 0 0 0 10" Name="ManBm4"></TextBlock>
+                        <TextBlock HorizontalAlignment="Right" Foreground="DarkRed" Name="ManBm5"></TextBlock>
+                    </StackPanel>
+                </StackPanel>
+
+            </StackPanel>
+
+
+
+        </StackPanel>
+    </Grid>
+</Page>
