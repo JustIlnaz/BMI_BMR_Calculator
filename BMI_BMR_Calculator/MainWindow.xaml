@@ -9,7 +9,7 @@
     <Grid>
         <!--выбор калькуляторов -->
         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Button Content="BMR Калькулятор" Margin="10"/>
+            <Button Content="BMR Калькулятор"  Margin="10"/>
             <Button Content="BMI Калькулятор" Margin="10"/>
 
         </StackPanel>

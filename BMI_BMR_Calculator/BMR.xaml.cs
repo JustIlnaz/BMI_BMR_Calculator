@@ -17,7 +17,7 @@ namespace BMI_BMR_Calculator
     /// <summary>
     /// Логика взаимодействия для BMR.xaml
     /// </summary>
-    public partial class BMR : Page
+    public partial class BMR : Window
     {
         public BMR()
         {
@@ -65,5 +65,9 @@ namespace BMI_BMR_Calculator
                 ManBm3.Text = (bmr * 1.55).ToString();
                 ManBm4.Text = (bmr * 1.725).ToString();
                 ManBm5.Text = (bmr * 1.9).ToString();
+
+
             }
+        }
+    }
 }
