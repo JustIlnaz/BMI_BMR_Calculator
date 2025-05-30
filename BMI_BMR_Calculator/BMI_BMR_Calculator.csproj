@@ -108,7 +108,12 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="image\bmi-healthy-icon.png" />
+    <Resource Include="image\bmi-obese-icon.png" />
+    <Resource Include="image\bmi-overweight-icon.png" />
+    <Resource Include="image\bmi-underweight-icon.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="image\female-icon.png" />
     <Resource Include="image\male-icon.png" />

@@ -8,74 +8,126 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="BMI">
 
-    <Grid >
-        <StackPanel Background="White">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32*"/>
+            <RowDefinition Height="193*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="301*"/>
+            <ColumnDefinition Width="499*"/>
+        </Grid.ColumnDefinitions>
+        
+        <StackPanel Background="White" Grid.ColumnSpan="2" Grid.RowSpan="2">
             <!-- Заголовок -->
             <TextBlock FontSize="24" Text="BMI Calculator" HorizontalAlignment="Center" Margin="10"/>
 
-
             <!--Текстовый Блок о информации-->
             <StackPanel Orientation="Vertical" Margin="10">
-                <TextBlock FontSize="17"><Run Text="Информация о том, что такое BMI и  "/><LineBreak/><Run Text="как он работает "/></TextBlock>
-
+                <TextBlock FontSize="17">
+                    <Run Text="Информация о том, что такое BMI и "/><LineBreak/>
+                    <Run Text="как он работает "/>
+                </TextBlock>
             </StackPanel>
 
             <!-- Выбор пола -->
-
             <StackPanel Orientation="Horizontal" Margin="10">
-                <Button Width="80" Height="80" Margin="10">
+                <Button Name="maleButton" Width="101" Height="120" Margin="10" Click="MaleButton_Click">
                     <StackPanel Orientation="Vertical">
-                        <Image Source="image/male-icon.png" Width="30" Height="30" Margin="5" />
-                        <TextBlock Text="Мужской" VerticalAlignment="Center" Margin="5 0 0 0" />
+                        <Image Source="image/male-icon.png" Width="73" Height="71" Margin="5" />
+                        <TextBlock Text="Мужской" VerticalAlignment="Center" Margin="5 0 0 0" HorizontalAlignment="Center"/>
                     </StackPanel>
                 </Button>
 
-                <Button Width="80" Height="80" Margin="10">
+                <Button Name="femaleButton" Width="101" Height="120" Margin="10" Click="FemaleButton_Click">
                     <StackPanel Orientation="Vertical">
-                        <Image Source="image/male-icon.png" Width="30" Height="30" Margin="5" />
-                        <TextBlock Text="Женский" VerticalAlignment="Center" Margin="5 0 0 0" />
+                        <Image Source="image/female-icon.png" Width="73" Height="71" Margin="5" />
+                        <TextBlock Text="Женский" VerticalAlignment="Center" Margin="5 0 0 0" HorizontalAlignment="Center"/>
                     </StackPanel>
                 </Button>
-
             </StackPanel>
-
 
             <!-- Поля ввода -->
             <StackPanel Orientation="Vertical" Margin="10">
-
-
                 <StackPanel Orientation="Horizontal">
-
                     <StackPanel Orientation="Vertical">
                         <TextBlock Text="Рост:" Margin="50,5,5,5"/>
                         <TextBlock Text="Вес:" Margin="50,5,5,5"/>
                     </StackPanel>
 
                     <StackPanel Orientation="Vertical">
-                        <TextBox  Width="50" Margin="0,5,5,5"/>
-                        <TextBox Width="50" Margin="0,5,5,5"/>
+                        <TextBox Name="heightTextBox" Width="50" Margin="0,5,5,5"/>
+                        <TextBox Name="weightTextBox" Width="50" Margin="0,5,5,5"/>
                     </StackPanel>
 
                     <StackPanel Orientation="Vertical">
                         <TextBlock Text="см" Margin="0,5,5,5"/>
                         <TextBlock Text="кг" Margin="0,5,5,5"/>
                     </StackPanel>
-
                 </StackPanel>
-
             </StackPanel>
 
             <!-- Кнопки действия -->
             <StackPanel Orientation="Horizontal" Margin="10">
-                <Button Content="Рассчитать" Click="CalculateBMI_Click"  Margin="10"/>
+                <Button Content="Рассчитать" Click="CalculateBMI_Click" Margin="10"/>
                 <Button Content="Отмена" Click="Cancel_Click" Margin="10"/>
             </StackPanel>
-
         </StackPanel>
-         
+
         <!--Вывод-->
-        <StackPanel>
+        <StackPanel Grid.Column="1" Margin="10,10,10,10" Grid.Row="1">
+            <!--Вывод изображения-->
+            <Button Name="resultButton" Width="141" Height="145" Margin="10" BorderThickness="0" Background="Transparent">
+                <StackPanel Orientation="Vertical">
+                    <Image Name="resultImage" Source="image/male-icon.png" Width="110" Height="91"/>
+                    <TextBlock Name="categoryText" Text="Здоровый" VerticalAlignment="Center" Margin="5 0 0 0" HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Button>
             
+            <!-- BMI значение -->
+            <TextBlock Name="bmiValueText" Text="0.0" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,10,0,5"/>
+            
+            <!-- BMI слайдер с цветными сегментами -->
+            <StackPanel Margin="10">
+                <!-- Стрелка указатель -->
+                <Canvas Height="20">
+                    <Polygon Name="bmiArrow" Points="10,0 20,20 0,20" Fill="Black" Canvas.Left="150">
+                        <Polygon.RenderTransform>
+                            <RotateTransform Angle="180" CenterX="10" CenterY="10"/>
+                        </Polygon.RenderTransform>
+                    </Polygon>
+                </Canvas>
+                
+                <!-- Цветная шкала -->
+                <Grid Height="30">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <Rectangle Grid.Column="0" Fill="#FFD700" Margin="1,0"/>
+                    <Rectangle Grid.Column="1" Fill="#32CD32" Margin="1,0"/>
+                    <Rectangle Grid.Column="2" Fill="#FFA500" Margin="1,0"/>
+                    <Rectangle Grid.Column="3" Fill="#FF0000" Margin="1,0"/>
+                </Grid>
+                
+                <!-- Подписи категорий -->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <TextBlock Grid.Column="0" Text="Недостаточный" FontSize="10" HorizontalAlignment="Center" Margin="2"/>
+                    <TextBlock Grid.Column="1" Text="Здоровый" FontSize="10" HorizontalAlignment="Center" Margin="2"/>
+                    <TextBlock Grid.Column="2" Text="Избыточный" FontSize="10" HorizontalAlignment="Center" Margin="2"/>
+                    <TextBlock Grid.Column="3" Text="Ожирение" FontSize="10" HorizontalAlignment="Center" Margin="2"/>
+                </Grid>
+            </StackPanel>
         </StackPanel>
     </Grid>
 </Page>

@@ -5,15 +5,42 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BMI_BMR_Calculator"
         mc:Ignorable="d"
-        Title="BMI_BMR_Calculato" Height="450" Width="800">
+        Title="BMI_BMR_Calculator" Height="450" Width="800">
     <Grid>
-        <!--выбор калькуляторов -->
-        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Button Content="BMR Калькулятор"  Margin="10"/>
-            <Button Content="BMI Калькулятор" Margin="10"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
+        <!-- Заголовок приложения -->
+        <TextBlock Grid.Row="0" Text="Калькулятор BMI и BMR" 
+                   FontSize="28" FontWeight="Bold" 
+                   HorizontalAlignment="Center" 
+                   Margin="20"/>
+
+        <!-- Выбор калькуляторов -->
+        <StackPanel Grid.Row="1" Orientation="Horizontal" 
+                    VerticalAlignment="Center" 
+                    HorizontalAlignment="Center">
+            <Button Name="BmrButton" Content="BMR Калькулятор" 
+                    Margin="20" FontSize="20" 
+                    Width="200" Height="60"
+                    Click="BmrButton_Click"/>
+            <Button Name="BmiButton" Content="BMI Калькулятор" 
+                    Margin="20" FontSize="20" 
+                    Width="200" Height="60"
+                    Click="BmiButton_Click"/>
         </StackPanel>
-        
-       
+
+        <!-- Информация о калькуляторах -->
+        <StackPanel Grid.Row="2" Margin="20">
+            <TextBlock Text="BMI - Индекс массы тела" 
+                       FontSize="14" HorizontalAlignment="Center" 
+                       Margin="5"/>
+            <TextBlock Text="BMR - Базовый метаболизм" 
+                       FontSize="14" HorizontalAlignment="Center" 
+                       Margin="5"/>
+        </StackPanel>
     </Grid>
 </Window>
