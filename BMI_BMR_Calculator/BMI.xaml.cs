@@ -9,14 +9,47 @@ namespace BMI_BMR_Calculator
     {
         private string selectedGender = "";
         private MainWindow parentWindow;
-
+       
         public BMI(MainWindow parent)
         {
             InitializeComponent();
             parentWindow = parent;
-        }
+            // Подписываемся на событие изменения значения ползунка
+            bmiSlider.ValueChanged += BmiSlider_ValueChanged;
 
-        private void MaleButton_Click(object sender, RoutedEventArgs e)
+            // Инициализируем начальное положение стрелки
+            UpdateBmiArrowPosition();
+            bmiValueText.Text = bmiSlider.Value.ToString("F1");
+        }
+        private void BmiSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            // Обновляем текстовое значение
+            bmiValueText.Text = bmiSlider.Value.ToString("F1");
+
+            // Обновляем позицию стрелки
+            UpdateBmiArrowPosition();
+        }
+        private void UpdateBmiArrowPosition()
+        {
+            double minValue = bmiSlider.Minimum;
+            double maxValue = bmiSlider.Maximum;
+            double currentValue = bmiSlider.Value;
+
+            // Нормализуем значение от 0 до 1
+            double normalized = (currentValue - minValue) / (maxValue - minValue);
+
+            // Получаем ширину Canvas
+            double canvasWidth = bmiScaleCanvas.ActualWidth;
+
+            // Вычисляем позицию стрелки
+            double arrowPosition = normalized * canvasWidth;
+
+            // Центрируем стрелку
+            Canvas.SetLeft(bmiArrow, arrowPosition - 8); // 8 - половина ширины стрелки
+        }
+    
+
+private void MaleButton_Click(object sender, RoutedEventArgs e)
         {
             selectedGender = "male";
             // Визуальная обратная связь
